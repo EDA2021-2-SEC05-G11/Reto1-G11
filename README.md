@@ -1,3 +1,6 @@
+Est1: Lucciano Franco 202111458
+Est2: Lina Ojeda 202112324
+
 #ISIS1225 - Librerias de soporte
 
 Este proyecto contiene los Tipos abstractos de datos, estructuras de datos y algoritmos requeridos por el curso ISIS1225-Estructuras de Datos y Algoritmos
