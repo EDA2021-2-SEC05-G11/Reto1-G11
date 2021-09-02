@@ -67,22 +67,20 @@ def newCatalog():
 # Funciones para agregar informacion al catalogo
 
 def addartists(catalog, artists):
-    # Se adiciona el libro a la lista de libros
+    # Se adiciona el artista a la lista de artistas
     lt.addLast(catalog['artists'], artists)
-    # Se obtienen los autores del libro
+    # Se obtienen los nombres de los  artista 
     name = artists['DisplayName'].split(",")
-    # Cada autor, se crea en la lista de libros del catalogo, y se
-    # crea un libro en la lista de dicho autor (apuntador al libro)
+    # se crea una lista de los artistas 
     for artist in name:
         lt.addLast(catalog, artist.strip(), artists)
 
 def addartworks(catalog, artworks):
-    # Se adiciona el libro a la lista de libros
+    # Se adiciona el artista a la lista de artistas
     lt.addLast(catalog['artworks'], artworks)
-    # Se obtienen los autores del libro
+    # Se obtienen los trabajos de arte 
     name = artworks['DisplayName'].split(",")
-    # Cada autor, se crea en la lista de libros del catalogo, y se
-    # crea un libro en la lista de dicho autor (apuntador al libro)
+    # Se crea una lista de los trabjos de arte 
     for artist in name:
         lt.addLast(catalog, artist.strip(), artworks)
 
