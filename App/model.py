@@ -46,3 +46,43 @@ los mismos.
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+
+def newCatalog():
+    """
+    Inicializa el catálogo de libros. Crea una lista vacia para guardar
+    todos los libros, adicionalmente, crea una lista vacia para los autores,
+    una lista vacia para los generos y una lista vacia para la asociación
+    generos y libros. Retorna el catalogo inicializado.
+    """
+    catalog = {'artists': None,
+               'artworks': None,
+               }
+
+    catalog['artists'] = lt.newList()
+    catalog['artworks'] = lt.newList()
+
+    return catalog
+
+
+# Funciones para agregar informacion al catalogo
+
+def addartists(catalog, artists):
+    # Se adiciona el artista a la lista de artistas
+    lt.addLast(catalog['artists'], artists)
+    # Se obtienen los nombres de los  artista 
+    name = artists['DisplayName'].split(",")
+    # se crea una lista de los artistas 
+    for artist in name:
+        lt.addLast(catalog, artist.strip(), artists)
+
+def addartworks(catalog, artworks):
+    # Se adiciona el artista a la lista de artistas
+    lt.addLast(catalog['artworks'], artworks)
+    # Se obtienen los trabajos de arte 
+    name = artworks['DisplayName'].split(",")
+    # Se crea una lista de los trabjos de arte 
+    for artist in name:
+        lt.addLast(catalog, artist.strip(), artworks)
+
+
+
