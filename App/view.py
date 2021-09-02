@@ -53,7 +53,7 @@ def loadData(catalog):
     """
     Carga los libros en la estructura de datos
     """
-    return controller.loadData(catalog)
+    controller.loadData(catalog)
 
 
 
