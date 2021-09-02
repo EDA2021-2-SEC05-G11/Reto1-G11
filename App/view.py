@@ -42,6 +42,20 @@ def printMenu():
     print("4- REQ. 3: clasificar las obras de un artista por técnica") 
 
 
+def initCatalog():
+    """
+    Inicializa el catalogo de libros
+    """
+    return controller.initCatalog()
+
+
+def loadData(catalog):
+    """
+    Carga los libros en la estructura de datos
+    """
+    return controller.loadData(catalog)
+
+
 
     
 
