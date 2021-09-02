@@ -54,13 +54,13 @@ def loadartists(catalog):
     referencia a la obra que se esta procesando.
     """
     artistsfile = cf.data_dir + 'MoMA reto/Artists-utf8-small.csv'
-    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
+    input_file = csv.DictReader(open(artistsfile, encoding='utf-8'))
     for artists in input_file:
         model.addartists(catalog, artists)
 
 def loadartworks(catalog):
     artworksfile = cf.data_dir + 'MoMA reto/Artworks-utf8-small.csv'
-    input_file = csv.DictReader(open(booksfile, encoding='utf-8'))
+    input_file = csv.DictReader(open(artworksfile, encoding='utf-8'))
     for artworks in input_file:
         model.addartworks(catalog, artworks)
 
