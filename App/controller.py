@@ -39,6 +39,7 @@ def initCatalog():
 
 # Funciones para la carga de datos
 def loadData(catalog):
+    
     """
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
