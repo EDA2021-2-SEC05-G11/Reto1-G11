@@ -35,6 +35,12 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 los mismos.
 """
 
+<<<<<<< HEAD
+=======
+# Construccion de modelos
+
+
+>>>>>>> 0c595828fd07e3798952dcb678a1318f799cfd33
 # Funciones para agregar informacion al catalogo
 
 # Funciones para creacion de datos
