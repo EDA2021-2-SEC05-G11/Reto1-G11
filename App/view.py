@@ -40,7 +40,10 @@ def printMenu():
     print("2- REQ. 1: listar cronológicamente los artistas")
     print("3- REQ. 2: listar cronológicamente las adquisiciones")
     print("4- REQ. 3: clasificar las obras de un artista por técnica") 
-
+    print("5- REQ. 4: clasificar las obras por la nacionalidad de sus creadores")
+    print("6- REQ. 5: transportar obras de un departamento")
+    print("7- REQ. 6: proponer una nueva exposición en el museo")
+    print("0- Salir del programa")
 
 def initCatalog():
     """
@@ -54,10 +57,6 @@ def loadData(catalog):
     Carga los libros en la estructura de datos
     """
     controller.loadData(catalog)
-
-
-
-    
 
 catalog = None
 
