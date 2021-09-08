@@ -72,6 +72,8 @@ while True:
         loadData(catalog)
         print('Autores cargados: ' + str(lt.size(catalog['artists'])))
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
+     
+       
         
 
     elif int(inputs[0]) == 2:

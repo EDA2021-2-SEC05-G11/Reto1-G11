@@ -64,6 +64,7 @@ def loadartworks(catalog):
     for artworks in input_file:
         model.addartworks(catalog, artworks)
 
+
 # Funciones de ordenamiento
 
 

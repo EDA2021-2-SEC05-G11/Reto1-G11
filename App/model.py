@@ -69,20 +69,14 @@ def newCatalog():
 def addartists(catalog, artists):
     # Se adiciona el artista a la lista de artistas
     lt.addLast(catalog['artists'], artists)
-    # Se obtienen los nombres de los  artista 
-    id = artists['ConstituentID'].split(",")
-    # se crea una lista de los artistas 
-    for artist in id:
-        lt.addLast(catalog["artists"], artists)
+  
 
 def addartworks(catalog, artworks):
     # Se adiciona el artista a la lista de artistas
     lt.addLast(catalog['artworks'], artworks)
-    # Se obtienen los trabajos de arte 
-    id = artworks['ConstituentID'].split(",")
-    # Se crea una lista de los trabjos de arte 
-    for artist in id:
-        lt.addLast(catalog["artworks"], artworks)
+
+
+
 
 
 
