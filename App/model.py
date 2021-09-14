@@ -69,11 +69,37 @@ def newCatalog():
 def addartists(catalog, artists):
     # Se adiciona el artista a la lista de artistas
     lt.addLast(catalog['artists'], artists)
+
+    s=lt.lastElement(catalog['artists'])["BeginDate"]
+
   
 
 def addartworks(catalog, artworks):
     # Se adiciona el artista a la lista de artistas
     lt.addLast(catalog['artworks'], artworks)
+
+def comparacionasendentebegindate(e1,e2):   
+
+    if e1["BeginDate"]< e2["BeginDate"]:
+
+        return True
+
+    else:
+
+        return False     
+
+
+def ordenarlistaartists(listaartistas, definicion):
+
+    if definicion == "ascendente":
+
+        sa.sort(listaartistas, comparacionasendentebegindate)
+
+    else:  
+
+        pass          
+
+
 
 
 

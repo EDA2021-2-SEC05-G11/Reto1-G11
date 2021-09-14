@@ -56,6 +56,7 @@ def loadartists(catalog):
     artistsfile = cf.data_dir + '/MoMA/Artists-utf8-small.csv'
     input_file = csv.DictReader(open(artistsfile, encoding='utf-8'))
     for artists in input_file:
+        artists["BeginDate"]= int(artists["BeginDate"])
         model.addartists(catalog, artists)
 
 def loadartworks(catalog):
@@ -64,8 +65,17 @@ def loadartworks(catalog):
     for artworks in input_file:
         model.addartworks(catalog, artworks)
 
+def ordenamiento(c):
+
+    model.ordenarlistaartists(c,"ascendente")
 
 # Funciones de ordenamiento
+
+
+
+
+
+
 
 
 # Funciones de consulta sobre el catálogo

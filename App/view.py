@@ -25,6 +25,8 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
 
 
 """
@@ -58,6 +60,10 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
+def pruebacomparacion(catalog):
+
+    controller.ordenamiento(catalog) 
+
 catalog = None
 
 """
@@ -72,12 +78,11 @@ while True:
         loadData(catalog)
         print('Autores cargados: ' + str(lt.size(catalog['artists'])))
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
-     
-       
-        
 
     elif int(inputs[0]) == 2:
+
         pass
+        
     elif int(inputs[0]) == 3:
         pass
     elif int(inputs[0]) == 4:
