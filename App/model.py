@@ -28,7 +28,13 @@
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import quicksort as qs
+from DISClib.Algorithms.Sorting import mergesort as me
 assert cf
+from datetime import datetime
+import time 
+
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -47,7 +53,7 @@ los mismos.
 
 # Funciones de ordenamiento
 
-def newCatalog():
+def newCatalog(tipo):
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
     todos los libros, adicionalmente, crea una lista vacia para los autores,
@@ -58,46 +64,99 @@ def newCatalog():
                'artworks': None,
                }
 
-    catalog['artists'] = lt.newList()
-    catalog['artworks'] = lt.newList()
+    catalog['artists'] = lt.newList(datastructure=tipo)
+    catalog['artworks'] = lt.newList(datastructure=tipo)
 
     return catalog
+
 
 
 # Funciones para agregar informacion al catalogo
 
 def addartists(catalog, artists):
     # Se adiciona el artista a la lista de artistas
-    lt.addLast(catalog['artists'], artists)
-
-    s=lt.lastElement(catalog['artists'])["BeginDate"]
-
-  
+    lt.addLast(catalog['artists'], artists)  
 
 def addartworks(catalog, artworks):
     # Se adiciona el artista a la lista de artistas
     lt.addLast(catalog['artworks'], artworks)
+    
+   
 
-def comparacionasendentebegindate(e1,e2):   
+def comparacionDateAcquired(e1, e2): 
+    e1 = e1['DateAcquired']
+    e2 = e2['DateAcquired']
+    p1 = None
+    P2 = None
 
-    if e1["BeginDate"]< e2["BeginDate"]:
-
-        return True
-
+    if len(e1) != 0 or None or '':
+        e1 = datetime.strptime(e1, '%Y-%m-%d') 
+        p1 = True
     else:
+        p1 = False
 
-        return False     
+        
+    if len(e2) != 0 or None or '':
+        e2 = datetime.strptime(e2, '%Y-%m-%d') 
+        p2= True
+    else:
+        p2 = False
+
+    if p1==False:
+        return (False)
+    if p2==False:
+        return (True)
+    if p1==True and p2==True:
+    
+     if e1 < e2:
+        
+        return (True)
+
+     else:
+
+        return(False)     
+
+def menu():
+    print("opciones") 
+    print("1- Shellsort")
+    print("2-Insertionsort")
+    print("3- quicksort")
+    print("4- mergesort")
+
+def crearsublista(lst, numelem):
+    n=True
+    while n==True:
+        menu()
+        algo = int(input("elegir algorit "))
+        if algo == 1:
+          algo =sa
+          n=False
+        elif algo == 2:
+           algo = ins
+           n=False
+        elif algo == 3:
+             algo = qs 
+             n=False
+        elif algo == 4:
+            algo = me 
+            n=False
+        else:
+            print("elija una opcion valida")
+        
+
+    sub_list = lt.subList(lst, 1, numelem)
+    sorted_list = algo.sort(sub_list, comparacionDateAcquired)
+    
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    sorted_list = algo.sort(sub_list, comparacionDateAcquired)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    print(elapsed_time_mseg)
+    return elapsed_time_mseg, sorted_list
 
 
-def ordenarlistaartists(listaartistas, definicion):
 
-    if definicion == "ascendente":
-
-        sa.sort(listaartistas, comparacionasendentebegindate)
-
-    else:  
-
-        pass          
 
 
 

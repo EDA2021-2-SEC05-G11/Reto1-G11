@@ -27,7 +27,7 @@ from DISClib.ADT import list as lt
 assert cf
 default_limit = 1000
 sys.setrecursionlimit(default_limit*10)
-
+from time import process_time
 
 """
 La vista se encarga de la interacción con el usuario
@@ -38,20 +38,23 @@ operación solicitada
 
 def printMenu():
     print("Bienvenido")
-    print("1- Cargar información en el catálogo")
-    print("2- REQ. 1: listar cronológicamente los artistas")
-    print("3- REQ. 2: listar cronológicamente las adquisiciones")
-    print("4- REQ. 3: clasificar las obras de un artista por técnica") 
-    print("5- REQ. 4: clasificar las obras por la nacionalidad de sus creadores")
-    print("6- REQ. 5: transportar obras de un departamento")
-    print("7- REQ. 6: proponer una nueva exposición en el museo")
-    print("0- Salir del programa")
+    
+    
+    print("1- Seleccionar tipo de lista A o B ")
+    print("2- Seleccionar algoritmo de orden ")
+    print("2- REQ. 1: listar cronológicamente los artistas ")
+    print("3- REQ. 2: listar cronológicamente las adquisiciones ")
+    print("4- REQ. 3: clasificar las obras de un artista por técnica ") 
+    print("5- REQ. 4: clasificar las obras por la nacionalidad de sus creadores ")
+    print("6- REQ. 5: transportar obras de un departamento ")
+    print("7- REQ. 6: proponer una nueva exposición en el museo ")
+    print("0- Salir del programa ")
 
-def initCatalog():
+def initCatalog(tipo):
     """
     Inicializa el catalogo de libros
     """
-    return controller.initCatalog()
+    return controller.initCatalog(tipo)
 
 
 def loadData(catalog):
@@ -72,16 +75,27 @@ Menu principal
 while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
+    
     if int(inputs[0]) == 1:
+
+        tipo = int(input("1- ARRAY_LIST o 2-LINKED_LIST: "))
+        if tipo == 1:
+            tipo = 'ARRAY_LIST'
+        elif tipo == 2:
+            tipo = 'LINKED_LIST'
+        else:
+            break
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        catalog = initCatalog(tipo)
         loadData(catalog)
         print('Autores cargados: ' + str(lt.size(catalog['artists'])))
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
 
+       
     elif int(inputs[0]) == 2:
+        numelem = int(input("Digite el tamaño de la sub lista: "))
 
-        pass
+        A=(controller.tamano(catalog['artworks'], numelem))
         
     elif int(inputs[0]) == 3:
         pass

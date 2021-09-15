@@ -23,6 +23,7 @@
 import config as cf
 import model
 import csv
+from datetime import datetime
 
 
 """
@@ -30,11 +31,11 @@ El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
-def initCatalog():
+def initCatalog(tipo):
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalog()
+    catalog = model.newCatalog(tipo)
     return catalog
 
 # Funciones para la carga de datos
@@ -57,6 +58,7 @@ def loadartists(catalog):
     input_file = csv.DictReader(open(artistsfile, encoding='utf-8'))
     for artists in input_file:
         artists["BeginDate"]= int(artists["BeginDate"])
+        
         model.addartists(catalog, artists)
 
 def loadartworks(catalog):
@@ -69,9 +71,10 @@ def ordenamiento(c):
 
     model.ordenarlistaartists(c,"ascendente")
 
-# Funciones de ordenamiento
-
-
+def tamano(lst, numelem):
+    
+    return model.crearsublista(lst, numelem)
+    
 
 
 
