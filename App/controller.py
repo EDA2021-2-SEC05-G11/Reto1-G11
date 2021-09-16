@@ -67,10 +67,6 @@ def loadartworks(catalog):
     for artworks in input_file:
         model.addartworks(catalog, artworks)
 
-def ordenamiento(c):
-
-    model.ordenarlistaartists(c,"ascendente")
-
 def tamano(lst, numelem):
     
     return model.crearsublista(lst, numelem)

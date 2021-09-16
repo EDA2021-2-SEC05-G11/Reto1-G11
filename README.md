@@ -1,5 +1,10 @@
-Est1: Lucciano Franco 202111458
-Est2: Lina Ojeda 202112324
+Est1: Lucciano Franco 
+Codigo: 202111458
+Correo: l.francom@uniandes.edu.co
+Est2: Lina Ojeda 
+Codigo: 202112324
+Correo: l.ojedaa@uniandes.edu.co
+
 
 #ISIS1225 - Librerias de soporte
 

@@ -119,7 +119,7 @@ def comparacionDateAcquired(e1, e2):
 def menu():
     print("opciones") 
     print("1- Shellsort")
-    print("2-Insertionsort")
+    print("2- Insertionsort")
     print("3- quicksort")
     print("4- mergesort")
 
@@ -127,7 +127,7 @@ def crearsublista(lst, numelem):
     n=True
     while n==True:
         menu()
-        algo = int(input("elegir algorit "))
+        algo = int(input("elegir algoritmo "))
         if algo == 1:
           algo =sa
           n=False
@@ -145,8 +145,7 @@ def crearsublista(lst, numelem):
         
 
     sub_list = lt.subList(lst, 1, numelem)
-    sorted_list = algo.sort(sub_list, comparacionDateAcquired)
-    
+    sorted_list = algo.sort(sub_list, comparacionDateAcquired) 
     sub_list = sub_list.copy()
     start_time = time.process_time()
     sorted_list = algo.sort(sub_list, comparacionDateAcquired)
