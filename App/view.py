@@ -40,7 +40,7 @@ def printMenu():
     print("Bienvenido")
     
     
-    print("1- Seleccionar tipo de lista A o B ")
+    print("1- Seleccionar tipo de lista ")
     print("2- Seleccionar algoritmo de orden ")
     print("3- REQ. 1: listar cronológicamente los artistas ")
     print("4- REQ. 2: listar cronológicamente las adquisiciones ")
@@ -78,7 +78,7 @@ while True:
     
     if int(inputs[0]) == 1:
 
-        tipo = int(input("1- ARRAY_LIST o 2-LINKED_LIST: "))
+        tipo = int(input("1- ARRAY_LIST\n2-LINKED_LIST\n "))
         if tipo == 1:
             tipo = 'ARRAY_LIST'
         elif tipo == 2:
