@@ -78,7 +78,7 @@ while True:
     
     if int(inputs[0]) == 1:
 
-        tipo = int(input("1- ARRAY_LIST\n2-LINKED_LIST\n "))
+        tipo = int(input("1- ARRAY_LIST\n2- LINKED_LIST\n "))
         if tipo == 1:
             tipo = 'ARRAY_LIST'
         elif tipo == 2:
@@ -98,8 +98,8 @@ while True:
         A=(controller.tamano(catalog['artworks'], numelem))
         
     elif int(inputs[0]) == 3:
-        año_ini = int(input("Digite el año inicial del artista"))
-        año_fini = int(input("Digite el año final del artista"))
+        año_ini = int(input("Digite el año inicial del artista: "))
+        año_fini = int(input("Digite el año final del artista: "))
         print (controller.req1(catalog, año_ini, año_fini))
     elif int(inputs[0]) == 4:
         pass

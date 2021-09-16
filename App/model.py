@@ -41,18 +41,6 @@ Se define la estructura de un catálogo de videos. El catálogo tendrá dos list
 los mismos.
 """
 
-# Construccion de modelos
-
-# Funciones para agregar informacion al catalogo
-
-# Funciones para creacion de datos
-
-# Funciones de consulta
-
-# Funciones utilizadas para comparar elementos dentro de una lista
-
-# Funciones de ordenamiento
-
 def newCatalog(tipo):
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
@@ -154,7 +142,7 @@ def crearsublista(lst, numelem):
     print(elapsed_time_mseg)
     return elapsed_time_mseg, sorted_list
 
-#Req 1
+#Requerimiento 1
 def comparacionbegindate(a1, a2):
     return a1['BeginDate']<a2['BeginDate']
 def req1(catalog, año_ini, año_fini):
@@ -171,16 +159,4 @@ def req1(catalog, año_ini, año_fini):
     for i in range(1, lt.size(Lista_ultimos)+1):
         lt.addLast(Lista_final, lt.getElement(Lista_ultimos, i))
 
-    return Lista_final
-
-
-
-
-
-
-
-
-
-
-
-
+    return Lista_final, ("Existen: "+str(lt.size(Lista_sort))+ " artistas según los años dados.")

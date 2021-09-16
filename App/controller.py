@@ -30,7 +30,7 @@ from datetime import datetime
 El controlador se encarga de mediar entre la vista y el modelo.
 """
 
-# Inicialización del Catálogo de libros
+# Inicialización del Catálogo
 def initCatalog(tipo):
     """
     Llama la funcion de inicializacion del catalogo del modelo.
@@ -70,14 +70,8 @@ def loadartworks(catalog):
 def tamano(lst, numelem):
     
     return model.crearsublista(lst, numelem)
-    
+
+#Requerimientos
 def req1(catalog, año_ini, año_fini):
     return model.req1(catalog, año_ini, año_fini)
 
-
-
-
-
-
-
-# Funciones de consulta sobre el catálogo
