@@ -42,12 +42,12 @@ def printMenu():
     
     print("1- Seleccionar tipo de lista A o B ")
     print("2- Seleccionar algoritmo de orden ")
-    print("2- REQ. 1: listar cronológicamente los artistas ")
-    print("3- REQ. 2: listar cronológicamente las adquisiciones ")
-    print("4- REQ. 3: clasificar las obras de un artista por técnica ") 
-    print("5- REQ. 4: clasificar las obras por la nacionalidad de sus creadores ")
-    print("6- REQ. 5: transportar obras de un departamento ")
-    print("7- REQ. 6: proponer una nueva exposición en el museo ")
+    print("3- REQ. 1: listar cronológicamente los artistas ")
+    print("4- REQ. 2: listar cronológicamente las adquisiciones ")
+    print("5- REQ. 3: clasificar las obras de un artista por técnica ") 
+    print("6- REQ. 4: clasificar las obras por la nacionalidad de sus creadores ")
+    print("7- REQ. 5: transportar obras de un departamento ")
+    print("8- REQ. 6: proponer una nueva exposición en el museo ")
     print("0- Salir del programa ")
 
 def initCatalog(tipo):
@@ -98,8 +98,18 @@ while True:
         A=(controller.tamano(catalog['artworks'], numelem))
         
     elif int(inputs[0]) == 3:
-        pass
+        año_ini = int(input("Digite el año inicial del artista"))
+        año_fini = int(input("Digite el año final del artista"))
+        print (controller.req1(catalog, año_ini, año_fini))
     elif int(inputs[0]) == 4:
+        pass
+    elif int(inputs[0]) == 5:
+        pass
+    elif int(inputs[0]) == 6:
+        pass
+    elif int(inputs[0]) == 7:
+        pass
+    elif int(inputs[0]) == 8:
         pass
 
     else:

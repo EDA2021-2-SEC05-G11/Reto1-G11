@@ -75,6 +75,9 @@ def tamano(lst, numelem):
     
     return model.crearsublista(lst, numelem)
     
+def req1(catalog, año_ini, año_fini):
+    return model.req1(catalog, año_ini, año_fini)
+
 
 
 

@@ -155,6 +155,26 @@ def crearsublista(lst, numelem):
     print(elapsed_time_mseg)
     return elapsed_time_mseg, sorted_list
 
+#Req 1
+def comparacionbegindate(a1, a2):
+    return a1['BeginDate']<a2['BeginDate']
+def req1(catalog, año_ini, año_fini):
+    Lista = lt.newList(datastructure='ARRAY_LIST')
+    for i in range(1, lt.size(catalog['artists'])+1):
+        artista = lt.getElement(catalog['artists'], i)
+        if artista['BeginDate'] != '' or artista['BeginDate']!=0:
+            if int(artista['BeginDate'])> año_ini and int(artista['BeginDate'])<año_fini:
+                lt.addLast(Lista, artista)
+    
+    Lista_sort = sa.sort(Lista, comparacionbegindate)
+    Lista_final = lt.subList(Lista_sort, 1, 3)
+    Lista_ultimos = lt.subList(Lista_sort, lt.size(Lista_sort)-3, 3)
+    for i in range(1, lt.size(Lista_ultimos)+1):
+        lt.addLast(Lista_final, lt.getElement(Lista_ultimos, i))
+
+    return Lista_final
+
+
 
 
 
