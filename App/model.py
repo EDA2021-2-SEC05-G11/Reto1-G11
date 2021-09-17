@@ -77,14 +77,14 @@ def comparacionDateAcquired(e1, e2):
     p1 = None
     P2 = None
 
-    if len(e1) != 0 or None or '':
+    if len(e1) > 0 :
         e1 = datetime.strptime(e1, '%Y-%m-%d') 
         p1 = True
     else:
         p1 = False
 
         
-    if len(e2) != 0 or None or '':
+    if len(e2) > 0:
         e2 = datetime.strptime(e2, '%Y-%m-%d') 
         p2= True
     else:
@@ -93,7 +93,7 @@ def comparacionDateAcquired(e1, e2):
     if p1==False:
         return (False)
     if p2==False:
-        return (True)
+        return (False)
     if p1==True and p2==True:
     
      if e1 < e2:
@@ -142,9 +142,10 @@ def crearsublista(lst, numelem):
     print(elapsed_time_mseg)
     return elapsed_time_mseg, sorted_list
 
-#Requerimiento 1
-def comparacionbegindate(a1, a2):
+def comparacionfechas(a1, a2):
     return a1['BeginDate']<a2['BeginDate']
+
+#Requerimiento 1
 def req1(catalog, año_ini, año_fini):
     Lista = lt.newList(datastructure='ARRAY_LIST')
     for i in range(1, lt.size(catalog['artists'])+1):
@@ -153,10 +154,64 @@ def req1(catalog, año_ini, año_fini):
             if int(artista['BeginDate'])> año_ini and int(artista['BeginDate'])<año_fini:
                 lt.addLast(Lista, artista)
     
-    Lista_sort = sa.sort(Lista, comparacionbegindate)
+    Lista_sort = sa.sort(Lista, comparacionfechas)
     Lista_final = lt.subList(Lista_sort, 1, 3)
     Lista_ultimos = lt.subList(Lista_sort, lt.size(Lista_sort)-3, 3)
     for i in range(1, lt.size(Lista_ultimos)+1):
         lt.addLast(Lista_final, lt.getElement(Lista_ultimos, i))
 
     return Lista_final, ("Existen: "+str(lt.size(Lista_sort))+ " artistas según los años dados.")
+
+
+#Requerimiento 2 
+def convertir_fecha(anio, indicador: str):
+
+    sol=None
+
+    if indicador == "inicio":
+
+        sol = str(anio-1) + "-12-31"
+
+    else:
+
+        sol = str(anio+1) + "-01-01"  
+
+    return datetime.strptime(sol, '%Y-%m-%d') 
+
+def req2(artworks,anio_inicial, anio_final):
+
+    lista = lt.newList(datastructure='ARRAY_LIST')
+
+    for i in range(1, lt.size(artworks)+1):
+
+        obra = lt.getElement(artworks, i)
+
+        if len(obra['DateAcquired']) > 0:
+
+            lt.addLast(lista, obra)
+
+    fecha_inicial=convertir_fecha(anio_inicial, "inicio")
+    fecha_final= convertir_fecha(anio_final, "fin")  
+    final = lt.newList(datastructure='ARRAY_LIST')   
+
+    for i in range(1, lt.size(lista)+1):
+
+        comp = lt.getElement(lista, i)
+        fecha=datetime.strptime(comp['DateAcquired'], '%Y-%m-%d') 
+
+        if fecha > fecha_inicial and fecha < fecha_final:
+
+            lt.addLast(final, comp)
+
+    lista_sort = sa.sort(final, comparacionDateAcquired)  
+    lista_final = lt.subList(lista_sort, 1, 3)
+    lista_ultimos = lt.subList(lista_sort, lt.size(lista_sort)-3, 3)
+
+    for i in range(1, lt.size(lista_ultimos)+1):
+        lt.addLast(lista_final, lt.getElement(lista_ultimos, i))       
+
+    print (lista_final)    
+
+    return ("Existen: " + str(lt.size(lista_sort)) + " obras en el rango de los años dados.")
+
+    

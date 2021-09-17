@@ -75,3 +75,6 @@ def tamano(lst, numelem):
 def req1(catalog, año_ini, año_fini):
     return model.req1(catalog, año_ini, año_fini)
 
+def req2(catalog, anio_inicial, anio_final):
+    return model.req2(catalog["artworks"], anio_inicial, anio_final)
+

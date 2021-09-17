@@ -40,15 +40,15 @@ def printMenu():
     print("Bienvenido")
     
     
-    print("1- Seleccionar tipo de lista ")
-    print("2- Seleccionar algoritmo de orden ")
-    print("3- REQ. 1: listar cronológicamente los artistas ")
-    print("4- REQ. 2: listar cronológicamente las adquisiciones ")
-    print("5- REQ. 3: clasificar las obras de un artista por técnica ") 
-    print("6- REQ. 4: clasificar las obras por la nacionalidad de sus creadores ")
-    print("7- REQ. 5: transportar obras de un departamento ")
-    print("8- REQ. 6: proponer una nueva exposición en el museo ")
-    print("0- Salir del programa ")
+    print("A- Seleccionar tipo de lista ")
+    print("B- Seleccionar algoritmo de orden ")
+    print("1- REQ. 1: listar cronológicamente los artistas ")
+    print("2- REQ. 2: listar cronológicamente las adquisiciones ")
+    print("4- REQ. 3: clasificar las obras de un artista por técnica ") 
+    print("4- REQ. 4: clasificar las obras por la nacionalidad de sus creadores ")
+    print("5- REQ. 5: transportar obras de un departamento ")
+    print("6- REQ. 6: proponer una nueva exposición en el museo ")
+    print("7- Salir del programa ")
 
 def initCatalog(tipo):
     """
@@ -76,7 +76,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     
-    if int(inputs[0]) == 1:
+    if inputs[0] == "A" or inputs[0] == "a":
 
         tipo = int(input("1- ARRAY_LIST\n2- LINKED_LIST\n "))
         if tipo == 1:
@@ -92,26 +92,30 @@ while True:
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
 
        
-    elif int(inputs[0]) == 2:
+    elif inputs[0] == "A" or inputs[0] == "a":
         numelem = int(input("Digite el tamaño de la sub lista: "))
 
         A=(controller.tamano(catalog['artworks'], numelem))
         
-    elif int(inputs[0]) == 3:
+    elif int(inputs[0]) == 1:
         año_ini = int(input("Digite el año inicial del artista: "))
         año_fini = int(input("Digite el año final del artista: "))
         print (controller.req1(catalog, año_ini, año_fini))
+    elif int(inputs[0]) == 2:
+        anio_inicial = int(input("Digite el año inicial del rango cronologico: "))
+        anio_final = int(input("Digite el año final del rango cronologico: "))
+        print (controller.req2(catalog, anio_inicial, anio_final))
+        
+    elif int(inputs[0]) == 3:
+        pass
     elif int(inputs[0]) == 4:
         pass
     elif int(inputs[0]) == 5:
         pass
     elif int(inputs[0]) == 6:
         pass
-    elif int(inputs[0]) == 7:
-        pass
-    elif int(inputs[0]) == 8:
-        pass
 
     else:
+
         sys.exit(0)
 sys.exit(0)
