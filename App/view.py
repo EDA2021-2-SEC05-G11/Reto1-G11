@@ -23,6 +23,7 @@
 import config as cf
 import sys
 import controller
+import model
 from DISClib.ADT import list as lt
 assert cf
 default_limit = 1000
@@ -102,12 +103,25 @@ while True:
         año_fini = int(input("Digite el año final del artista: "))
         print (controller.req1(catalog, año_ini, año_fini))
     elif int(inputs[0]) == 2:
-        anio_inicial = int(input("Digite el año inicial del rango cronologico: "))
-        anio_final = int(input("Digite el año final del rango cronologico: "))
-        print (controller.req2(catalog, anio_inicial, anio_final))
+
+        print("Para ingresar la fecha siga las siguientes indicaciones\n")
+        anio_inicial = str(int(input("Digite el año inicial del rango cronologico: ")))
+        mes_inicial = str(int(input("Digite el mes inicial del rango cronologico : ")))
+        dia_inicial = str(int(input("Digite el dia inicial del rango cronologico: ")))
+
+        fecha_inicial= anio_inicial + "-" + mes_inicial + "-" + dia_inicial
+
+        anio_final = str(int(input("Digite el año final del rango cronologico: ")))
+        mes_final = str(int(input("Digite el mes final del rango cronologico: ")))
+        dia_final = str(int(input("Digite el dia final del rango cronologico: ")))
+
+        fecha_final= anio_final + "-" + mes_final + "-" + dia_final
+
+        print (controller.req2(catalog, fecha_inicial, fecha_final))
         
     elif int(inputs[0]) == 3:
-        pass
+        s=str(int(input(".")))
+        print (s)
     elif int(inputs[0]) == 4:
         pass
     elif int(inputs[0]) == 5:

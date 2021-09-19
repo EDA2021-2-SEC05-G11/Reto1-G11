@@ -25,6 +25,7 @@
  """
 
 
+from DISClib.DataStructures.arraylist import iterator, newList
 import config as cf
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -34,6 +35,18 @@ from DISClib.Algorithms.Sorting import mergesort as me
 assert cf
 from datetime import datetime
 import time 
+
+# Construccion de modelos
+
+# Funciones para agregar informacion al catalogo
+
+# Funciones para creacion de datos
+
+# Funciones de consulta
+
+# Funciones utilizadas para comparar elementos dentro de una lista
+
+# Funciones de ordenamiento
 
 
 """
@@ -75,7 +88,7 @@ def comparacionDateAcquired(e1, e2):
     e1 = e1['DateAcquired']
     e2 = e2['DateAcquired']
     p1 = None
-    P2 = None
+    p2 = None
 
     if len(e1) > 0 :
         e1 = datetime.strptime(e1, '%Y-%m-%d') 
@@ -164,21 +177,69 @@ def req1(catalog, año_ini, año_fini):
 
 
 #Requerimiento 2 
-def convertir_fecha(anio, indicador: str):
 
-    sol=None
+def purchase(lista):
 
-    if indicador == "inicio":
+    cantidad = 0
 
-        sol = str(anio-1) + "-12-31"
+    for i in range(1, lt.size(lista)+1):
 
-    else:
+      obra=lt.getElement(lista, i)
 
-        sol = str(anio+1) + "-01-01"  
+      if obra["CreditLine"].lower() ==  "purchase":
 
-    return datetime.strptime(sol, '%Y-%m-%d') 
+          cantidad += 1
 
-def req2(artworks,anio_inicial, anio_final):
+    return (cantidad)  
+
+def resultado_final_con_id(lista, catalog):
+    
+    resultado=lt.newList(datastructure='ARRAY_LIST')  
+    artists = catalog["artists"]
+    iterador = 0
+    diccionario={}
+
+    for i in range(1, lt.size(lista)+1):
+
+        diccionario={}
+        obra = lt.getElement(lista,i)
+
+        for i in obra["ConstituentID"]:
+
+
+          artistas= ""
+          iterador = 0  
+          encontrado = False 
+          
+          while iterador <= lt.size(artists) and encontrado != True:
+
+           artista = lt.getElement(artists,iterador)
+
+           if i == int(artista["ConstituentID"]):
+
+            artistas + str(artista["DisplayName"])
+            encontrado = True 
+           else: 
+
+            iterador += 1 
+
+        obra["ArtistsName"]= artistas          
+        diccionario["ObjectID"] = obra["ObjectID"]
+        diccionario["Title"] = obra["Title"]
+        diccionario["ArtistsName"] = obra["ArtistsName"]
+        diccionario ["Medium"] = obra["Medium"]
+        diccionario["Dimensions"] = obra["Dimensions"]
+        diccionario["Date"] = obra["Date"] 
+        diccionario["DateAcquired"] = obra["DateAcquired"]
+        diccionario["URL"] = obra["URL"]
+
+        lt.addLast(resultado, diccionario)    
+      
+    return resultado          
+
+def req2(catalog,fecha_inicial, fecha_final):
+
+    artworks = catalog["artworks"]
 
     lista = lt.newList(datastructure='ARRAY_LIST')
 
@@ -190,28 +251,42 @@ def req2(artworks,anio_inicial, anio_final):
 
             lt.addLast(lista, obra)
 
-    fecha_inicial=convertir_fecha(anio_inicial, "inicio")
-    fecha_final= convertir_fecha(anio_final, "fin")  
-    final = lt.newList(datastructure='ARRAY_LIST')   
+    fecha_inicial=datetime.strptime(fecha_inicial, '%Y-%m-%d') 
+    fecha_final= datetime.strptime(fecha_final, '%Y-%m-%d') 
+    rango = lt.newList(datastructure='ARRAY_LIST')   
 
     for i in range(1, lt.size(lista)+1):
 
         comp = lt.getElement(lista, i)
         fecha=datetime.strptime(comp['DateAcquired'], '%Y-%m-%d') 
 
-        if fecha > fecha_inicial and fecha < fecha_final:
+        if fecha >= fecha_inicial and fecha <= fecha_final:
 
-            lt.addLast(final, comp)
+            lt.addLast(rango, comp)
 
-    lista_sort = sa.sort(final, comparacionDateAcquired)  
+    if lt.size(rango)< 1:
+
+      return("No se encontraron obras dentro del rango dado" )
+
+    lista_sort = sa.sort(rango, comparacionDateAcquired)  
     lista_final = lt.subList(lista_sort, 1, 3)
     lista_ultimos = lt.subList(lista_sort, lt.size(lista_sort)-3, 3)
 
     for i in range(1, lt.size(lista_ultimos)+1):
-        lt.addLast(lista_final, lt.getElement(lista_ultimos, i))       
+        lt.addLast(lista_final, lt.getElement(lista_ultimos, i))  
 
-    print (lista_final)    
+    compra=purchase(lista_sort)         
 
-    return ("Existen: " + str(lt.size(lista_sort)) + " obras en el rango de los años dados.")
+    print ("Existen: " + str(lt.size(lista_sort)) + " obras en el rango de los años dados.")
+    print ("Existen " + str(compra) + " obras adquiridas por compra")
+
+    resultado=resultado_final_con_id(lista_final, catalog)
+    return resultado
+
+
+
+
+
+
 
     
