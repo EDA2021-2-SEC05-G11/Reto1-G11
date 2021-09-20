@@ -350,21 +350,41 @@ def req3(catalog, nombre):
             lt.addLast(obras_por_artista, obra)
             contar_obras += 1
             break
-
+        print("Existen " + str(lt.size(obras_por_artista)) + " obras en el museo con su nombre\n")
         medium = buscar_medium(obras_por_artista)
-        print("Existen " + str(len(obras_por_artista)) + " obras en el museo con su nombre")
-        print("Existen " + str(len(medium)) + " diferentes tecnicas en sus obras de trabajo.")
+        print("Existen " + str(len(medium)) + " diferentes tecnicas en sus obras de trabajo.\n")
         medios=lt.subList(contar_medios(medium), 1, 5)
         print(medios)
-        resultado = tecnica_mas_utilizada(medios, medium)
+        obras_tecnica = tecnica_mas_utilizada(medios, medium)
+        resultado = eliminar_adicionales(obras_tecnica)
 
+    return resultado
+
+def eliminar_adicionales(lista):
+
+    resultado = []
+    diccionario = {}
+     
+    for i in range(len(lista)):
+
+     diccionario = {}
+     diccionario["Title"] = lista[i]["Title"]
+     diccionario["Date"]= lista[i]["Date"]
+     diccionario["Medium"] = lista[i]["Medium"]
+     diccionario["Dimensions"] = lista[i]["Dimensions"]
+
+     resultado.append(diccionario)
+    
     return resultado 
+
 
 def tecnica_mas_utilizada(medios, lista_medios):
 
     mas_utilizado = lt.getElement(medios, 1)
     nombre= mas_utilizado["MediumName"]
     tecnicas = lista_medios[nombre]
+
+    print("Su medio mas utilizado fue " + nombre)
 
     return tecnicas
 

@@ -121,7 +121,7 @@ while True:
         
     elif int(inputs[0]) == 3:
         
-        nombre=str(input("Ingrese el nombre del artista: "))
+        nombre=str(input("Ingrese el nombre del artista: \n"))
         print(controller.req3(catalog, nombre))
 
     elif int(inputs[0]) == 4:
@@ -135,3 +135,4 @@ while True:
 
         sys.exit(0)
 sys.exit(0)
+
