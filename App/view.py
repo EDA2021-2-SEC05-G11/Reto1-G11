@@ -120,8 +120,10 @@ while True:
         print (controller.req2(catalog, fecha_inicial, fecha_final))
         
     elif int(inputs[0]) == 3:
-        s=str(int(input(".")))
-        print (s)
+        
+        nombre=str(input("Ingrese el nombre del artista: "))
+        print(controller.req3(catalog, nombre))
+
     elif int(inputs[0]) == 4:
         pass
     elif int(inputs[0]) == 5:

@@ -158,6 +158,27 @@ def crearsublista(lst, numelem):
 def comparacionfechas(a1, a2):
     return a1['BeginDate']<a2['BeginDate']
 
+def id_a_lista(string):
+
+    un_digito=True
+
+    if "," in string:
+      un_digito=False
+
+    valores = string[1:len(string)-1]  
+
+    if un_digito == False:
+
+        resultado = valores.split(",")
+
+    else:
+
+        resultado = [valores]
+
+    return resultado 
+
+
+
 #Requerimiento 1
 def req1(catalog, año_ini, año_fini):
     Lista = lt.newList(datastructure='ARRAY_LIST')
@@ -198,16 +219,17 @@ def resultado_final_con_id(lista, catalog):
     artists = catalog["artists"]
     iterador = 0
     diccionario={}
+    artistas= ""
 
     for i in range(1, lt.size(lista)+1):
 
         diccionario={}
         obra = lt.getElement(lista,i)
+        lista_obra = id_a_lista(obra["ConstituentID"])
+        artistas= ""
 
-        for i in obra["ConstituentID"]:
-
-
-          artistas= ""
+        for n in lista_obra:
+       
           iterador = 0  
           encontrado = False 
           
@@ -215,18 +237,18 @@ def resultado_final_con_id(lista, catalog):
 
            artista = lt.getElement(artists,iterador)
 
-           if i == int(artista["ConstituentID"]):
+           if int(n) == int(artista["ConstituentID"]):
 
-            artistas + str(artista["DisplayName"])
+            artistas += artista["DisplayName"]
             encontrado = True 
+
            else: 
 
             iterador += 1 
-
-        obra["ArtistsName"]= artistas          
+     
         diccionario["ObjectID"] = obra["ObjectID"]
         diccionario["Title"] = obra["Title"]
-        diccionario["ArtistsName"] = obra["ArtistsName"]
+        diccionario["ArtistsName"] = artistas
         diccionario ["Medium"] = obra["Medium"]
         diccionario["Dimensions"] = obra["Dimensions"]
         diccionario["Date"] = obra["Date"] 
@@ -283,10 +305,111 @@ def req2(catalog,fecha_inicial, fecha_final):
     resultado=resultado_final_con_id(lista_final, catalog)
     return resultado
 
+#Requerimiento 3
+
+def obtener_id(artistas, nombre):
+    id = None 
+
+    for i in range(1, lt.size(artistas)+1):
+
+        artista=lt.getElement(artistas, i)
+        if nombre in artista["DisplayName"].lower() or nombre == artista["DisplayName"]:
+
+           id= int(artista["ConstituentID"])
+           break 
+        
+        else:
+
+            pass
+
+    return id
+def req3(catalog, nombre):
+
+    obras= catalog["artworks"]
+    artistas= catalog["artists"]
+    id = obtener_id(artistas, nombre.lower())
+    obras_por_artista = lt.newList(datastructure="ARRAY_LIST")
+    contar_obras = 0
+    resultado = None
+
+    if id == None:
+
+       resultado="El artista no fue encontrado dentro de nuestro catalogo"
+
+    else: 
+
+        for i in range(1, lt.size(obras)+1):
+
+          obra = lt.getElement(obras, i)
+          lista = id_a_lista(obra["ConstituentID"])
+
+          for s in lista: 
+
+           if id == int(s):
+
+            lt.addLast(obras_por_artista, obra)
+            contar_obras += 1
+            break
+
+        medium = buscar_medium(obras_por_artista)
+        print("Existen " + str(len(obras_por_artista)) + " obras en el museo con su nombre")
+        print("Existen " + str(len(medium)) + " diferentes tecnicas en sus obras de trabajo.")
+        medios=lt.subList(contar_medios(medium), 1, 5)
+        print(medios)
+        resultado = tecnica_mas_utilizada(medios, medium)
+
+    return resultado 
+
+def tecnica_mas_utilizada(medios, lista_medios):
+
+    mas_utilizado = lt.getElement(medios, 1)
+    nombre= mas_utilizado["MediumName"]
+    tecnicas = lista_medios[nombre]
+
+    return tecnicas
+
+def comparar_mayor(e1,e2):
+
+    return e1["Count"] > e2["Count"]
+
+
+
+def contar_medios(medios):
+
+    lista = lt.newList(datastructure="ARRAY_LIST")
+
+    for i in medios:
+        
+        dic = {}
+        dic["MediumName"] = i
+        dic["Count"] = len(medios[i])
+        lt.addLast(lista, dic)
+
+    sa.sort(lista, comparar_mayor)
+
+    return lista
+
+def buscar_medium(lista):
+
+    diccionario={}
+
+    for i in range(1, lt.size(lista)+1):
+
+       obra = lt.getElement(lista, i)    
+
+       if obra["Medium"] in diccionario:
+
+           diccionario[obra["Medium"]].append(obra)
+
+       else:
+
+           diccionario[obra["Medium"]]=[obra]
+
+    return diccionario 
 
 
 
 
 
 
-    
+

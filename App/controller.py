@@ -78,3 +78,6 @@ def req1(catalog, año_ini, año_fini):
 def req2(catalog, fecha_inicial, fecha_final):
     return model.req2(catalog, fecha_inicial, fecha_final)
 
+def req3(catalog, nombre):
+    return model.req3(catalog, nombre)
+
