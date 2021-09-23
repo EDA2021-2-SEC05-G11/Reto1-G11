@@ -125,11 +125,13 @@ while True:
         print(controller.req3(catalog, nombre))
 
     elif int(inputs[0]) == 4:
-        pass
+        controller.req4(catalog)
     elif int(inputs[0]) == 5:
-        pass
+        Departamento = str(input("Ingrese el departamento del MoMa: "))
+        controller.req5(Departamento, catalog)
     elif int(inputs[0]) == 6:
         pass
+        
 
     else:
 

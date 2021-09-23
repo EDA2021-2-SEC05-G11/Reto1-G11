@@ -426,10 +426,100 @@ def buscar_medium(lista):
            diccionario[obra["Medium"]]=[obra]
 
     return diccionario 
+#Requerimiento 4
+def catalog_req4():
+    catalog_requ4 = {'Nacionalidades': None,
+                    'Obras':None, 
+               }
+    
+    catalog_requ4['Nacionalidades'] = lt.newList(datastructure='ARRAY_LIST')
+    catalog_requ4['Obras'] = lt.newList(datastructure='ARRAY_LIST')
+    return catalog_requ4
+def comparelistaabc(lista1, lista2):
+    if (lt.getElement(lista1, 1) == lista2):
+        return 0
+    return -1
+
+def contarNacio(Lista):
+    diccionario={}
+
+    for i in range(1, lt.size(Lista)+1):
+           obra = lt.getElement(lista, i)    
+           if obra["Nationality"] in diccionario:
+               diccionario[obra["Nationality"]].append(obra)
+           else:
+               diccionario[obra["Nationality"]]=[obra]
+
+        
+    return diccionario 
 
 
 
 
+def req4(catalog):
+    Obras = lt.newList(datastructure='ARRAY_LIST')
+    Nacionalidades = lt.newList(datastructure='ARRAY_LIST')
+    for i in range(1, lt.size(catalog['artworks'])+1):
+        obras = lt.getElement(catalog['artworks'], i)
+        id_autors = obras['ConstituentID']
+        A = id_autors[1:len(id_autors)-1]
+        A = A.split(', ')
+        Lista_nueva = lt.newList()
+        for id_a in A:
+            lt.addLast(Lista_nueva, id_a)
 
+        for id_art in range(1, lt.size(Lista_nueva)+1):
+            Artista_id = lt.getElement(Lista_nueva, id_art)
+            dicc = {}
+            Pos = 1
+            #print('entro al while')
+            while Pos <= lt.size(catalog['artists']):
+                Artista = lt.getElement(catalog['artists'], Pos)
+                Pos += 1
+                if len(Artista['Nationality']) > 1:
+                    if Artista['Nationality'] in dicc:
+                        dicc[Artista['Nationality']]+=1
+                    else:
+                        dicc[Artista['Nationality']]=1
+    lt.addLast(Nacionalidades, dicc)
+    
+    print(Obras)
+def req5(Departamento, catalog):
+    costo_segun_tam = 72.00
+    costo_defecto = 48.00
+    Costo_total_sin_info = 0
+    Costo_total_con_info = 0
+    Costo_total_translado = 0
+    
+    Lista_sin_info = lt.newList(datastructure='ARRAY_LIST')
+    Lista_con_info = lt.newList(datastructure='ARRAY_LIST')
+    Lista_obras_dept = lt.newList(datastructure='ARRAY_LIST')
 
+    for i in range(1, lt.size(catalog['artworks'])+1):
+        Obra = lt.getElement(catalog['artworks'], i)
+        if Obra['Department'] == Departamento:
+            lt.addLast(Lista_obras_dept, Obra)
+        
+            #Caso no obras con info suficiente
 
+    for Obras in range(1, lt.size(Lista_obras_dept)+1):
+        Obras_dept = lt.getElement(Lista_obras_dept, Obras)
+        if Obras_dept['Dimensions'] == '' or Obras_dept['Dimensions'] == 'Variable' or Obras_dept['Dimensions'] == 'various' or Obras_dept['Dimensions'] == 'Various composition and sheet dimensions.' or Obras_dept['Dimensions'] == 'Various dimensions' or Obras_dept['Dimensions'] == 'Y':
+            lt.addLast(Lista_sin_info,  Obras_dept)
+            Costo_total_sin_info = (lt.size(Lista_sin_info)*costo_defecto)
+    
+            #Caso de obras con suficiente info
+
+        elif Obras_dept['Dimensions'] != '' or Obras_dept['Dimensions'] != 'Variable' or Obras_dept['Dimensions'] != 'various' or Obras_dept['Dimensions'] != 'Various composition and sheet dimensions.' or Obras_dept['Dimensions'] != 'Various dimensions' or Obras_dept['Dimensions'] != 'Y':
+                lt.addLast(Lista_con_info, Obras_dept)
+    lista_areas = []
+    Height = ""
+    Lenght = ""
+    Width = ""
+    for Medidas in range(1, lt.size(Lista_con_info)+1):
+        Medidas_obra = lt.getElement(Lista_con_info, Medidas)
+        if  (Medidas_obra['Height (cm)'] != '' or Medidas_obra['Height (cm)'] !=0) and (Medidas_obra['Lenght (cm)'] != '' or Medidas_obra['Lenght (cm)'] !=0) and (Medidas_obra['Width (cm)'] != '' or Medidas_obra['Width (cm)'] !=0):
+            A = float(Medidas_obra['Height (cm)']) * Medidas_obra['Lenght (cm)'] * Medidas_obra['Width (cm)']
+            print(A)
+         
+    
