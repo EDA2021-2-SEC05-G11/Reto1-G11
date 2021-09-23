@@ -54,7 +54,7 @@ def loadartists(catalog):
     cada uno de ellos, se crea en la lista de artistas, a dicho artista y una
     referencia a la obra que se esta procesando.
     """
-    artistsfile = cf.data_dir + '/MoMA/Artists-utf8-small.csv'
+    artistsfile = cf.data_dir + '/MoMA/Artists-utf8-large.csv'
     input_file = csv.DictReader(open(artistsfile, encoding='utf-8'))
     for artists in input_file:
         artists["BeginDate"]= int(artists["BeginDate"])
@@ -85,3 +85,6 @@ def req4(catalog):
     return model.req4(catalog)
 def req5(Departamento, catalog):
     return model.req5(Departamento, catalog)
+
+def req6(catalog, anio_inicial, anio_final, area_disponible):
+    return model.req6(catalog, anio_inicial, anio_final, area_disponible)

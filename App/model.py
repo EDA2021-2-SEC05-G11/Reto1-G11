@@ -34,6 +34,7 @@ from DISClib.Algorithms.Sorting import quicksort as qs
 from DISClib.Algorithms.Sorting import mergesort as me
 assert cf
 from datetime import datetime
+from time import process_time 
 import time 
 
 # Construccion de modelos
@@ -157,27 +158,6 @@ def crearsublista(lst, numelem):
 
 def comparacionfechas(a1, a2):
     return a1['BeginDate']<a2['BeginDate']
-
-def id_a_lista(string):
-
-    un_digito=True
-
-    if "," in string:
-      un_digito=False
-
-    valores = string[1:len(string)-1]  
-
-    if un_digito == False:
-
-        resultado = valores.split(",")
-
-    else:
-
-        resultado = [valores]
-
-    return resultado 
-
-
 
 #Requerimiento 1
 def req1(catalog, año_ini, año_fini):
@@ -307,6 +287,26 @@ def req2(catalog,fecha_inicial, fecha_final):
 
 #Requerimiento 3
 
+def id_a_lista(string):
+
+    un_digito=True
+
+    if "," in string:
+      un_digito=False
+
+    valores = string[1:len(string)-1]  
+
+    if un_digito == False:
+
+        resultado = valores.split(",")
+
+    else:
+
+        resultado = [valores]
+
+    return resultado 
+
+
 def obtener_id(artistas, nombre):
     id = None 
 
@@ -392,8 +392,6 @@ def comparar_mayor(e1,e2):
 
     return e1["Count"] > e2["Count"]
 
-
-
 def contar_medios(medios):
 
     lista = lt.newList(datastructure="ARRAY_LIST")
@@ -426,38 +424,10 @@ def buscar_medium(lista):
            diccionario[obra["Medium"]]=[obra]
 
     return diccionario 
+
 #Requerimiento 4
-def catalog_req4():
-    catalog_requ4 = {'Nacionalidades': None,
-                    'Obras':None, 
-               }
-    
-    catalog_requ4['Nacionalidades'] = lt.newList(datastructure='ARRAY_LIST')
-    catalog_requ4['Obras'] = lt.newList(datastructure='ARRAY_LIST')
-    return catalog_requ4
-def comparelistaabc(lista1, lista2):
-    if (lt.getElement(lista1, 1) == lista2):
-        return 0
-    return -1
-
-def contarNacio(Lista):
-    diccionario={}
-
-    for i in range(1, lt.size(Lista)+1):
-           obra = lt.getElement(lista, i)    
-           if obra["Nationality"] in diccionario:
-               diccionario[obra["Nationality"]].append(obra)
-           else:
-               diccionario[obra["Nationality"]]=[obra]
-
-        
-    return diccionario 
-
-
-
 
 def req4(catalog):
-    Obras = lt.newList(datastructure='ARRAY_LIST')
     Nacionalidades = lt.newList(datastructure='ARRAY_LIST')
     for i in range(1, lt.size(catalog['artworks'])+1):
         obras = lt.getElement(catalog['artworks'], i)
@@ -522,4 +492,104 @@ def req5(Departamento, catalog):
             A = float(Medidas_obra['Height (cm)']) * Medidas_obra['Lenght (cm)'] * Medidas_obra['Width (cm)']
             print(A)
          
+#Requerimiento 6
+
+def comparacionanio(a1, a2):
+    return a1["Date"]<a2["Date"]
+
+def req6(catalog, anio_inicial, anio_final, area_disponible):
+    total_metros = 0
+
+    lista = lt.newList(datastructure="ARRAY_LIST")
+    for i in range(1, lt.size(catalog["artworks"])+1):
+        obra = lt.getElement(catalog["artworks"], i)
+        clasificacion = obra["Classification"] 
+   
+        if len(obra['Date']) != 0:
+
+          if int(obra["Date"]) > anio_inicial and int(obra["Date"])< anio_final:
+
+              if (clasificacion == "Drawing") or (clasificacion == "Painting") or (clasificacion == "Photograph") or (clasificacion == "Design") or (clasificacion == "Print"):
+
+                 lt.addLast(lista, obra)
     
+    lista_sort = sa.sort(lista, comparacionanio)
+    lista_nombres= None
+
+    for i in range(1, lt.size(lista_sort)+1):
+        obra = lt.getElement(lista_sort, i)
+        lista_nombres=id_a_lista(obra["ConstituentID"])
+        lista_artistas= []
+        for p in lista_nombres:
+            for e in range(1, lt.size(catalog["artists"])+1):
+                artistas = lt.getElement(catalog["artists"], e)
+
+                if int(p) == int(artistas["ConstituentID"]):
+
+                    lista_artistas.append(artistas["DisplayName"])
+                    break 
+
+        obra["ArtistsNames"] = lista_artistas
+
+    lista_final = lt.newList(datastructure="ARRAY_LIST")
+
+    for i in range(1, lt.size(lista_sort)+1):
+        obra = lt.getElement(lista_sort, i)
+        area= 0
+        dic={}
+
+        if len(obra["Height (cm)"]) > 0:
+
+            if len(obra["Width (cm)"]) > 0:
+                dic["Title"] = obra["Title"]
+                dic["ArtistsNames"] = obra["ArtistsNames"]
+                dic["Date"] = obra["Date"]
+                dic["Classification"] = obra["Classification"]
+                dic["Medium"] = obra["Medium"]
+                dic["Dimensions"] = obra["Dimensions"]
+                area= float(obra["Height (cm)"]) * float(obra["Width (cm)"])
+                dic["Area"]= area * 0.0001
+        
+                lt.addLast(lista_final, dic)
+
+    iterador = 0
+    final = False
+    ultimo_elemento = lt.size(lista_final)
+
+    while iterador <= lt.size(lista_final) and final == False:
+
+      elemento = lt.getElement(lista_final, iterador) 
+      
+      if float(total_metros) + elemento["Area"] < float(area_disponible):
+
+       total_metros += elemento["Area"] 
+       iterador += 1
+
+      else:
+          
+       final = True
+       ultimo_elemento = iterador -1
+
+    print("Las obras a exponer serian " + str(ultimo_elemento))
+    print("El area aproximada que se utiliza en m^2 es " + str(total_metros))
+
+    lista_definitiva=lt.subList(lista_final, 1, ultimo_elemento)
+    lista_a_retornar = None
+
+    if lt.size(lista_definitiva) > 10:
+
+       lista_a_retornar = lt.subList(lista_definitiva, 1, 3)
+       lista_ultimos = lt.subList(lista_definitiva, lt.size(lista_definitiva)-3, 3)
+
+       for i in range(1, lt.size(lista_ultimos)+1):
+         lt.addLast(lista_a_retornar, lt.getElement(lista_ultimos, i))  
+
+    else:
+
+        lista_a_retornar = lista_definitiva
+
+
+    return lista_a_retornar, process_time()
+        
+
+ 

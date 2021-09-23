@@ -130,8 +130,12 @@ while True:
         Departamento = str(input("Ingrese el departamento del MoMa: "))
         controller.req5(Departamento, catalog)
     elif int(inputs[0]) == 6:
-        pass
-        
+
+        anio_inicial = int(input("Digite el año inicial de las obras: "))
+        anio_final = int(input("Digite el año final de las obras: "))
+        area_disponible = str(input("Digite el área disponible en m²: "))
+
+        print(controller.req6(catalog, anio_inicial, anio_final, area_disponible))
 
     else:
 
