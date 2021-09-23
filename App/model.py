@@ -36,19 +36,8 @@ assert cf
 from datetime import datetime
 from time import process_time 
 import time 
-
-# Construccion de modelos
-
-# Funciones para agregar informacion al catalogo
-
-# Funciones para creacion de datos
-
-# Funciones de consulta
-
-# Funciones utilizadas para comparar elementos dentro de una lista
-
-# Funciones de ordenamiento
-
+import math
+from time import process_time
 
 """
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
@@ -174,7 +163,7 @@ def req1(catalog, año_ini, año_fini):
     for i in range(1, lt.size(Lista_ultimos)+1):
         lt.addLast(Lista_final, lt.getElement(Lista_ultimos, i))
 
-    return Lista_final, ("Existen: "+str(lt.size(Lista_sort))+ " artistas según los años dados.")
+    return Lista_final, ("Existen: "+str(lt.size(Lista_sort))+ " artistas según los años dados."), process_time()
 
 
 #Requerimiento 2 
@@ -283,7 +272,7 @@ def req2(catalog,fecha_inicial, fecha_final):
     print ("Existen " + str(compra) + " obras adquiridas por compra")
 
     resultado=resultado_final_con_id(lista_final, catalog)
-    return resultado
+    return resultado, process_time()
 
 #Requerimiento 3
 
@@ -353,12 +342,20 @@ def req3(catalog, nombre):
         print("Existen " + str(lt.size(obras_por_artista)) + " obras en el museo con su nombre\n")
         medium = buscar_medium(obras_por_artista)
         print("Existen " + str(len(medium)) + " diferentes tecnicas en sus obras de trabajo.\n")
-        medios=lt.subList(contar_medios(medium), 1, 5)
+        contador = contar_medios(medium)
+        if len(contador)>=5:
+
+            medios=lt.subList(contar_medios(medium), 1, 5)
+        if len(contador)<1:
+            return str('No hay obras')
+        else:
+
+            medios = contador
         print(medios)
         obras_tecnica = tecnica_mas_utilizada(medios, medium)
         resultado = eliminar_adicionales(obras_tecnica)
 
-    return resultado
+    return resultado, process_time()
 
 def eliminar_adicionales(lista):
 
@@ -424,20 +421,22 @@ def buscar_medium(lista):
            diccionario[obra["Medium"]]=[obra]
 
     return diccionario 
-
 #Requerimiento 4
 
 def req4(catalog):
+    
     Nacionalidades = lt.newList(datastructure='ARRAY_LIST')
     for i in range(1, lt.size(catalog['artworks'])+1):
         obras = lt.getElement(catalog['artworks'], i)
         id_autors = obras['ConstituentID']
+        
         A = id_autors[1:len(id_autors)-1]
         A = A.split(', ')
+        
         Lista_nueva = lt.newList()
         for id_a in A:
             lt.addLast(Lista_nueva, id_a)
-
+        
         for id_art in range(1, lt.size(Lista_nueva)+1):
             Artista_id = lt.getElement(Lista_nueva, id_art)
             dicc = {}
@@ -445,15 +444,22 @@ def req4(catalog):
             #print('entro al while')
             while Pos <= lt.size(catalog['artists']):
                 Artista = lt.getElement(catalog['artists'], Pos)
+                
+                if Artista_id == Artista['ConstituentID']:
+                    lt.insertElement(catalog['artworks'], Artista['DisplayName'], Pos)
+                
                 Pos += 1
                 if len(Artista['Nationality']) > 1:
                     if Artista['Nationality'] in dicc:
                         dicc[Artista['Nationality']]+=1
                     else:
                         dicc[Artista['Nationality']]=1
-    lt.addLast(Nacionalidades, dicc)
     
-    print(Obras)
+    lt.addLast(Nacionalidades, dicc)
+    dicc = sorted(dicc.items(), key=lambda x: x[1], reverse=True)
+    print( dicc,  process_time())
+    
+#Requerimiento 5
 def req5(Departamento, catalog):
     costo_segun_tam = 72.00
     costo_defecto = 48.00
@@ -482,10 +488,8 @@ def req5(Departamento, catalog):
 
         elif Obras_dept['Dimensions'] != '' or Obras_dept['Dimensions'] != 'Variable' or Obras_dept['Dimensions'] != 'various' or Obras_dept['Dimensions'] != 'Various composition and sheet dimensions.' or Obras_dept['Dimensions'] != 'Various dimensions' or Obras_dept['Dimensions'] != 'Y':
                 lt.addLast(Lista_con_info, Obras_dept)
-    lista_areas = []
-    Height = ""
-    Lenght = ""
-    Width = ""
+   
+    #Para circulos
     for Medidas in range(1, lt.size(Lista_con_info)+1):
         Medidas_obra = lt.getElement(Lista_con_info, Medidas)
         if  (Medidas_obra['Height (cm)'] != '' or Medidas_obra['Height (cm)'] !=0) and (Medidas_obra['Lenght (cm)'] != '' or Medidas_obra['Lenght (cm)'] !=0) and (Medidas_obra['Width (cm)'] != '' or Medidas_obra['Width (cm)'] !=0):
@@ -593,3 +597,22 @@ def req6(catalog, anio_inicial, anio_final, area_disponible):
         
 
  
+    if Medidas_obra['Diameter (cm)']!=0 or Medidas_obra['Diameter (cm)']!='':
+                cm_a_m = float(Medidas['Diameter (cm)'])/100
+                Area_obra = math.pi*(cm_a_m/2)^2
+                Costo_total_con_info = Area_obra*costo_segun_tam
+                print(Costo_total_con_info)
+    #Para figuras planas
+    elif (Medidas_obra['Length (cm)']!= 0 or  Medidas_obra['Length (cm)']!='') and (Medidas_obra['Width (cm)']!= 0 or  Medidas_obra['Width (cm)']!=''):
+            Area_cm_p = float(Medidas_obra['Length (cm)'])*float(Medidas_obra['Width (cm)'])
+            Area_m = Area_cm_p/10000
+            Costo_total_con_info = Costo_total_con_info+ (Area_m*costo_segun_tam)
+            print(Costo_total_con_info)
+    #Para figuras tridimensionales
+    elif ((Medidas_obra['Length (cm)']!= 0 or  Medidas_obra['Length (cm)']!='') and (Medidas_obra['Width (cm)']!= 0 or  Medidas_obra['Width (cm)']!='') and (Medidas_obra['Height (cm)']!= 0 or  Medidas_obra['Height (cm)']!='')):
+            Area_cm_t = float(Medidas_obra['Length (cm)'])*float(Medidas_obra['Width (cm)'])*float(Medidas_obra['Height (cm)'])
+            Area_m = Area_cm_t/10000
+            Costo_total_con_info = Costo_total_con_info + (Area_m*costo_segun_tam)
+            print(Costo_total_con_info)
+            print(Costo_total_con_info)
+    return Costo_total_con_info, process_time()
