@@ -495,6 +495,26 @@ def req5(Departamento, catalog):
         if  (Medidas_obra['Height (cm)'] != '' or Medidas_obra['Height (cm)'] !=0) and (Medidas_obra['Lenght (cm)'] != '' or Medidas_obra['Lenght (cm)'] !=0) and (Medidas_obra['Width (cm)'] != '' or Medidas_obra['Width (cm)'] !=0):
             A = float(Medidas_obra['Height (cm)']) * Medidas_obra['Lenght (cm)'] * Medidas_obra['Width (cm)']
             print(A)
+    
+    if Medidas_obra['Diameter (cm)']!=0 or Medidas_obra['Diameter (cm)']!='':
+                cm_a_m = float(Medidas['Diameter (cm)'])/100
+                Area_obra = math.pi*(cm_a_m/2)^2
+                Costo_total_con_info = Area_obra*costo_segun_tam
+                print(Costo_total_con_info)
+    #Para figuras planas
+    elif (Medidas_obra['Length (cm)']!= 0 or  Medidas_obra['Length (cm)']!='') and (Medidas_obra['Width (cm)']!= 0 or  Medidas_obra['Width (cm)']!=''):
+            Area_cm_p = float(Medidas_obra['Length (cm)'])*float(Medidas_obra['Width (cm)'])
+            Area_m = Area_cm_p/10000
+            Costo_total_con_info = Costo_total_con_info+ (Area_m*costo_segun_tam)
+            print(Costo_total_con_info)
+    #Para figuras tridimensionales
+    elif ((Medidas_obra['Length (cm)']!= 0 or  Medidas_obra['Length (cm)']!='') and (Medidas_obra['Width (cm)']!= 0 or  Medidas_obra['Width (cm)']!='') and (Medidas_obra['Height (cm)']!= 0 or  Medidas_obra['Height (cm)']!='')):
+            Area_cm_t = float(Medidas_obra['Length (cm)'])*float(Medidas_obra['Width (cm)'])*float(Medidas_obra['Height (cm)'])
+            Area_m = Area_cm_t/10000
+            Costo_total_con_info = Costo_total_con_info + (Area_m*costo_segun_tam)
+            print(Costo_total_con_info)
+            print(Costo_total_con_info)
+    return Costo_total_con_info, process_time()
          
 #Requerimiento 6
 
@@ -597,22 +617,3 @@ def req6(catalog, anio_inicial, anio_final, area_disponible):
         
 
  
-    if Medidas_obra['Diameter (cm)']!=0 or Medidas_obra['Diameter (cm)']!='':
-                cm_a_m = float(Medidas['Diameter (cm)'])/100
-                Area_obra = math.pi*(cm_a_m/2)^2
-                Costo_total_con_info = Area_obra*costo_segun_tam
-                print(Costo_total_con_info)
-    #Para figuras planas
-    elif (Medidas_obra['Length (cm)']!= 0 or  Medidas_obra['Length (cm)']!='') and (Medidas_obra['Width (cm)']!= 0 or  Medidas_obra['Width (cm)']!=''):
-            Area_cm_p = float(Medidas_obra['Length (cm)'])*float(Medidas_obra['Width (cm)'])
-            Area_m = Area_cm_p/10000
-            Costo_total_con_info = Costo_total_con_info+ (Area_m*costo_segun_tam)
-            print(Costo_total_con_info)
-    #Para figuras tridimensionales
-    elif ((Medidas_obra['Length (cm)']!= 0 or  Medidas_obra['Length (cm)']!='') and (Medidas_obra['Width (cm)']!= 0 or  Medidas_obra['Width (cm)']!='') and (Medidas_obra['Height (cm)']!= 0 or  Medidas_obra['Height (cm)']!='')):
-            Area_cm_t = float(Medidas_obra['Length (cm)'])*float(Medidas_obra['Width (cm)'])*float(Medidas_obra['Height (cm)'])
-            Area_m = Area_cm_t/10000
-            Costo_total_con_info = Costo_total_con_info + (Area_m*costo_segun_tam)
-            print(Costo_total_con_info)
-            print(Costo_total_con_info)
-    return Costo_total_con_info, process_time()
